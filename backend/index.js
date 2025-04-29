@@ -9,6 +9,9 @@ import express from "express"
 const app = express()
 const port = 3000
 
+//request to json from postman
+app.use(express.json())
+
 
 
 //avilable routes
