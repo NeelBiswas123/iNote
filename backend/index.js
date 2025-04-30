@@ -7,7 +7,7 @@ import notesRoutes from './routes/notes.js';
 
 import express from "express" 
 const app = express()
-const port = 3000
+const port = 5000
 
 //request to json from postman
 app.use(express.json())
