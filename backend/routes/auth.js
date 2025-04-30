@@ -33,6 +33,7 @@ router.post("/",[
         .then(user => res.json(user))
         .catch(err => {console.log(err)
             res.json({error : "please enter a different name ", message : err.message})
+            
         });
 
     
