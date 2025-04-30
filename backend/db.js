@@ -38,7 +38,7 @@
 
 // this is es6 version of prev method 
 import mongoose from "mongoose";
-const mongoURI = "mongodb://localhost:27017/";
+const mongoURI = "mongodb://localhost:27017/iNotebook";
 
 const connectToMongo = async () => {
     try {
