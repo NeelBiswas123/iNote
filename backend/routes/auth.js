@@ -35,7 +35,6 @@ const JWT_SECRET = "NeelBiswas"
         }
 
 //password hashing
-
         const salt = await bcrypt.genSalt(10); 
         const setPass = await bcrypt.hash(String(req.body.password), salt);
 
@@ -67,14 +66,57 @@ const JWT_SECRET = "NeelBiswas"
 //error for server side error 
     }catch(error){
     console.error(error.message);
-    res.status(500).send("Some error occured")
+    res.status(500).send("Internal Server error occured")
     
     }
 
 
 });
 
+
+
+
     
+// authentiate existing user using post"/api/auth/login" doesnt require auth(login)  
+    router.post("/login",[
+        body('email',"enter a valid email").isEmail(),
+        body('password',"Password cannot be blank").exists(),
+
+    ], async (req,res)=>{
+ 
+
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            return res.status(400).json({errors : result.array()});
+        }
+
+        const {email,password}= req.body;
+        try {
+            let user = await User.findOne({email});
+            if(!user){
+                return res.status(400).json({error: "Wrong Credentials entered, No user found"}) // if no user found in db or wrong email entered
+            }
+            const passwordCompare = await bcrypt.compare(password,user.password);
+            if(!passwordCompare){
+                return res.status(400).json({error: "Wrong Credentials entered , Wrong Password"}) // if wrong password entered
+            }
+    // if everything is correct runs this 
+            const data = {
+                
+                    user: {
+                        id : user.id
+                    }
+                }
+            const authToken = jwt.sign(data,JWT_SECRET);
+            res.json({authToken});
+
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).send("Internal Error occured")
+        }
+
+    });
+
 
 
     // res.send(req.body)
