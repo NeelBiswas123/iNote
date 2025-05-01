@@ -36,7 +36,7 @@
 
 
 
-// this is es6 version of prev method 
+// this is es6 version of prev method (it's connect ot mongoose    )
 import mongoose from "mongoose";
 const mongoURI = "mongodb://localhost:27017/iNotebook";
 

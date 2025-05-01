@@ -18,6 +18,7 @@ app.use(express.json())
   // app.use("/api/auth",require("./routes/auth.js")) //not work for es module
   // app.use("/api/notes",require("./routes/notes.js"))
 
+//for redirect to auth (access this localhost:5000/api/auth/(createuser it's in auth.js))
   app.use('/api/auth', authRoutes);
   app.use('/api/notes', notesRoutes);
 
