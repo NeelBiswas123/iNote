@@ -5,6 +5,8 @@ import { body, query,validationResult } from "express-validator"; // for validat
 import bcrypt from "bcryptjs"; // for password hashing
 import jwt from 'jsonwebtoken' // token method to hashing
 
+import fetchUser from "../middleware/fetchUser.js"; // for middleware used in 127 line
+
 
 const JWT_SECRET = "NeelBiswas"
 
@@ -114,18 +116,32 @@ const JWT_SECRET = "NeelBiswas"
             console.error(error.message);
             res.status(500).send("Internal Error occured")
         }
-
     });
 
-
-
+        
+        
+        
+        
+// fetch logged in user detail using post"/api/auth/getuser"  require auth(login)
+        router.post("/getuser",fetchUser, async (req,res)=>{
+     
+        try{
+            const userId= req.user.id;
+            const user = await User.findById(userId).select("-password")
+            res.send(user)
+        }catch (error) {
+            console.error(error.message);
+            res.status(500).send("Internal Error occuredererrer")
+        }
+        
+        
+        
+        
+    });
+    
+    
     // res.send(req.body)
     // res.send("Hello from auth");
-
-
-
-
-
-
+    
 //  module.exports = router
 export default router;
