@@ -1,12 +1,11 @@
 import express from "express"
 import User from "../models/User.js"
 const router = express.Router(); // handle req
-import { body, query,validationResult } from "express-validator"; // for validate of db entires not same email for two or more  
+import { body,validationResult } from "express-validator"; // for validate of db entires not same email for two or more  
 import bcrypt from "bcryptjs"; // for password hashing
 import jwt from 'jsonwebtoken' // token method to hashing
 
 import fetchUser from "../middleware/fetchUser.js"; // for middleware used in 127 line
-
 
 const JWT_SECRET = "NeelBiswas"
 

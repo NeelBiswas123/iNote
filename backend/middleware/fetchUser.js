@@ -7,6 +7,7 @@ const JWT_SECRET = "NeelBiswas"
 
 
 const fetchUser = (req,res,next)=>{
+    
 //get user from jwt token and add id to req object
     const token = req.header("auth-token") //req token from header 
     if(!token){
