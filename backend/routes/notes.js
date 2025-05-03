@@ -6,14 +6,14 @@ import { body,validationResult } from "express-validator"; // for validate of db
 const router = express.Router();
 
 
-// fetch to get all the notes using get"/api/auth/fetchallnotes" doesnt require auth(login)
+// Route-1 fetch to get all the notes using get"/api/notes/fetchallnotes" doesnt require auth(login)
     router.get("/fetchallnotes",fetchUser, async (req,res)=>{
         const notes = await Note.find({user: req.user.id});
         res.json(notes);
     // res.json([]);
     });
 
-//add a new note using post "/api/auth/addnote" auth required
+//Route-2 : add a new note using post "/api/notes/addnote" auth required(CREATE in CRUD)
     router.post("/addnote",fetchUser,[
         body('title',"enter the Title").isLength({min : 3}),
         body('description',"Enter the Description(atlease 10 chracters)").isLength({min : 10}),
@@ -42,4 +42,30 @@ const router = express.Router();
     
     });
 
+
+//Route-3 Update in Crud in "/api/notes/updatenote" 
+    router.put("/updatenote/:id",fetchUser, async (req,res)=>{
+        const {title,description,tag}=req.body;
+        //create new Note obj
+        const newNote ={
+        }
+
+        if(title){newNote.title= title};
+        if(description) {newNote.description= description};
+        if(tag) {newNote.tag= tag};
+
+
+        // find the note to be updated 
+        let note = await Note.findById(req.params.id)
+        if(!note) {return res.status(404).send("Not found")};
+
+        if(note.user.toString()!==req.user.id){
+            return res.status(401).send("Unauthorized access")
+        }
+
+
+        note = await Note.findByIdAndUpdate(req.params.id, {$set: newNote} , {new : true})
+        res.json(note)
+
+    });
 export default router;
