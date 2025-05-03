@@ -6,12 +6,15 @@ import { body,validationResult } from "express-validator"; // for validate of db
 const router = express.Router();
 
 
-// Route-1 fetch to get all the notes using get"/api/notes/fetchallnotes" doesnt require auth(login)
+// Route-1 fetch to get all the notes using get"/api/notes/fetchallnotes" doesnt require auth(login) (Read in CRUD)
     router.get("/fetchallnotes",fetchUser, async (req,res)=>{
         const notes = await Note.find({user: req.user.id});
         res.json(notes);
     // res.json([]);
     });
+
+
+
 
 //Route-2 : add a new note using post "/api/notes/addnote" auth required(CREATE in CRUD)
     router.post("/addnote",fetchUser,[
@@ -43,9 +46,13 @@ const router = express.Router();
     });
 
 
-//Route-3 Update in Crud in "/api/notes/updatenote" 
+
+
+//Route-3 Update in Crud in put "/api/notes/updatenote" 
     router.put("/updatenote/:id",fetchUser, async (req,res)=>{
         const {title,description,tag}=req.body;
+
+        try{
         //create new Note obj
         const newNote ={
         }
@@ -57,8 +64,9 @@ const router = express.Router();
 
         // find the note to be updated 
         let note = await Note.findById(req.params.id)
-        if(!note) {return res.status(404).send("Not found")};
+        if(!note) {return res.status(404).send("Not found")}; // if note not found to update
 
+        //to check that real person is creating this update not unauthorized
         if(note.user.toString()!==req.user.id){
             return res.status(401).send("Unauthorized access")
         }
@@ -66,6 +74,46 @@ const router = express.Router();
 
         note = await Note.findByIdAndUpdate(req.params.id, {$set: newNote} , {new : true})
         res.json(note)
+    }catch(error){
+        console.log(error.message);
+        
+        res.status(500).send("Internal server error")
+    }
+
+
+    });
+
+
+
+
+
+//Route-4 delete exisiting note in Crud in put "/api/notes/deletenote" 
+    router.delete("/deletenote/:id",fetchUser, async (req,res)=>{
+
+    try{
+        
+
+
+        // find the note to be deleted by id
+        let note = await Note.findById(req.params.id)
+        if(!note) {return res.status(404).send("Not found")}; // if note not found to be deleted or auth token is wrong
+
+        //allow deletion if user owns this note
+        if(note.user.toString()!==req.user.id){
+            return res.status(401).send("Unauthorized access") // bad person tries to delete it
+        }
+
+
+        note = await Note.findByIdAndDelete(req.params.id);
+        res.json({"Success" : "Note has been deleted", note: note})
+    }
+    catch(error){
+        console.log(error.message);
+        
+        res.status(500).send("Internal server error")
+    }
+
+    
 
     });
 export default router;
