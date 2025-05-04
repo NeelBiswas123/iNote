@@ -8,11 +8,14 @@ import {
 import Navbar from './Components/Navbar';
 import Home from './Components/Home';
 import About from './Components/About';
+import NoteState from './Context/notes/NoteState';
 
 
 export default function App() {
   return (
     <>
+    <NoteState >
+      
     <Router>
 
       <Navbar />
@@ -27,6 +30,8 @@ export default function App() {
          
         </Routes>
     </Router>
+
+    </NoteState>
     </>
   )
 }
