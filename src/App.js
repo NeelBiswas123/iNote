@@ -19,16 +19,18 @@ export default function App() {
     <Router>
 
       <Navbar />
-    
-      <Routes>
+      <div className="container">
+
+        <Routes>
           {/* <Route path="/about">
             <About />
-          </Route>  old method doesnot work*/ }
+            </Route>  old method doesnot work*/ }
 
           <Route exact path="/" element={<Home />} />
           <Route exact path="/about" element={<About />} />
          
         </Routes>
+      </div>
     </Router>
 
     </NoteState>
