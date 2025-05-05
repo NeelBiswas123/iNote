@@ -24,10 +24,28 @@ const NoteState=(props)=>{
           "__v": 0
         },
         {
+          "_id": "68143f96d970b4d8aa4fcb60",
+          "user": "6812e10b0171cf641f9e364b",
+          "title": "My Duplicate 1",
+          "description": "THis is my first duplicate note",
+          "tag": "Mongodb, Harry, video 52",
+          "date": "2025-05-02T03:44:22.531Z",
+          "__v": 0
+        },
+        {
+          "_id": "68143f96d970b4d8aa4fcb60",
+          "user": "6812e10b0171cf641f9e364b",
+          "title": "My DDD2",
+          "description": "THis is my #2 ddd Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet dolorem voluptas commodi blanditiis alias labore, corrupti doloremque sequi animi repudiandae libero sint!",
+          "tag": "Mongodb, Harry, video 52",
+          "date": "2025-05-02T03:44:22.531Z",
+          "__v": 0
+        },
+        {
           "_id": "681576475e5397352bd1977c",
           "user": "6812e10b0171cf641f9e364b",
           "title": "The Update Test",
-          "description": "THis my test to Update anote",
+          "description": "THis my test to Update a note",
           "tag": "Mongodb, Harry, video 53",
           "date": "2025-05-03T01:49:59.206Z",
           "__v": 0
