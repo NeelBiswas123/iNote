@@ -3,12 +3,12 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
 } from "react-router-dom";
 import Navbar from './Components/Navbar';
 import Home from './Components/Home';
 import About from './Components/About';
 import NoteState from './Context/notes/NoteState';
+import Alert from './Components/Alert';
 
 
 export default function App() {
@@ -19,6 +19,7 @@ export default function App() {
     <Router>
 
       <Navbar />
+      <Alert message="this is amazing react course" />
       <div className="container">
 
         <Routes>
