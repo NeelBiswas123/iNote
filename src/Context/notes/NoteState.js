@@ -52,12 +52,38 @@ const NoteState=(props)=>{
         }
       ]
     
-
-      const [notes,setnotes] = useState(notesInitial)
     
+      const [notes,setnotes] = useState(notesInitial)
+    //add a note 
+      const addNote = (title,description,tag)=>{
+      const note = {
+          "_id": "681576475e533397352bd1977c",
+          "user": "6812e10b0171cf641f9e364b",
+          "title": title,
+          "description": description,
+          "tag": tag,
+          "date": "2025-05-03T01:49:59.206Z",
+          "__v": 0
+        };
+        //use fetch api to call
+        // setnotes= (notes.push(note)) //old method 
+        setnotes([...notes, note]); // This correctly updates the state
+
+      }
+      
+      //del a note 
+      const delNote = ()=>{
+
+      }
+      
+      
+      //edit a note 
+      const editNote = ()=>{
+
+      }
 
     return (
-        <noteContext.Provider value={{notes,setnotes}} >
+        <noteContext.Provider value={{notes,addNote,delNote,editNote}} >
             {props.children}
         </noteContext.Provider>
     )
