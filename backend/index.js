@@ -12,6 +12,9 @@ const port = 5000
 //request to json from postman
 app.use(express.json())
 
+// const cors = require("cors");
+import cors from 'cors';
+app.use(cors()); // Allow all origins
 
 
 //avilable routes

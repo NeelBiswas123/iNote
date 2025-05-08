@@ -1,5 +1,6 @@
 DO NOT READ THIS IT"S NOT MODIFIED IM WORKING ON THIS PROJECT SO DONT READ README
-fetch api, fontweb
+
+fetch api, fontawesome(for icons),bootstrap , cors( npm install cors at backend folder to fix this:- Access to fetch at 'http://localhost:5000/api/notes/addnote' from origin 'http://localhost:3000' has been blocked by CORS policy: )
 
 ##
 I created a News Website where you can see daily news of USA . 

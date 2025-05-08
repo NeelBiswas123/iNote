@@ -4,58 +4,56 @@ import noteContext from "./NoteContext";
 
 
 const NoteState=(props)=>{
-    const notesInitial= [
-        {
-          "_id": "68143f96eeerd970b4d8aa4fcb5e",
-          "user": "6812e10b0171cf641f9e364b",
-          "title": "My First Program",
-          "description": "THis is my first program from lesson harry mongodb playlist video 52",
-          "tag": "Mongodb, Harry, video 52",
-          "date": "2025-05-02T03:44:22.012Z",
-          "__v": 0
-        },
-        {
-          "_id": "68143f964e1d970b4d8aa4fcb60",
-          "user": "6812e10b0171cf641f9e364b",
-          "title": "My First Program",
-          "description": "THis is my first program from lesson harry mongodb playlist video 52",
-          "tag": "Mongodb, Harry, video 52",
-          "date": "2025-05-02T03:44:22.531Z",
-          "__v": 0
-        },
-        {
-          "_id": "68143f96d55970b4d8aa4fcb61",
-          "user": "6812e10b0171cf641f9e364b",
-          "title": "My Duplicate 1",
-          "description": "THis is my first duplicate note",
-          "tag": "Mongodb, Harry, video 52",
-          "date": "2025-05-02T03:44:22.531Z",
-          "__v": 0
-        },
-        {
-          "_id": "68143f96d334970b4d8aa4fcb62",
-          "user": "6812e10b0171cf641f9e364b",
-          "title": "My DDD2",
-          "description": "THis is my #2 ddd Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet dolorem voluptas commodi blanditiis alias labore, corrupti doloremque sequi animi repudiandae libero sint!",
-          "tag": "Mongodb, Harry, video 52",
-          "date": "2025-05-02T03:44:22.531Z",
-          "__v": 0
-        },
-        {
-          "_id": "681576475e533397352bd1977c",
-          "user": "6812e10b0171cf641f9e364b",
-          "title": "The Update Test",
-          "description": "THis my test to Update a note",
-          "tag": "Mongodb, Harry, video 53",
-          "date": "2025-05-03T01:49:59.206Z",
-          "__v": 0
-        }
-      ]
+    const host = "http://localhost:5000"
+    const notesInitial= []
     
     
       const [notes,setnotes] = useState(notesInitial)
+
+
+//fetch all note 
+          const getNotes = async (title,description,tag)=>{
+            //api call 
+            const url = `${host}/api/notes/fetchallnotes`
+            const response = await fetch(url, {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                "auth-token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjgxMmUxMGIwMTcxY2Y2NDFmOWUzNjRiIn0sImlhdCI6MTc0NjE1MjQ0Mn0.B9nf3sDdSTgpBOlMScfXrXVOh95lZkMSsO5DBhOnHfs"
+
+              },
+              
+            
+            });
+            const json = await response.json();
+            // console.log(json);
+            setnotes(json)
+
+          }
+
+
+
+
     //add a note 
-      const addNote = (title,description,tag)=>{
+      const addNote = async (title,description,tag)=>{
+        //api call 
+        const url = `${host}/api/notes/addnote`
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjgxMmUxMGIwMTcxY2Y2NDFmOWUzNjRiIn0sImlhdCI6MTc0NjE1MjQ0Mn0.B9nf3sDdSTgpBOlMScfXrXVOh95lZkMSsO5DBhOnHfs"
+
+          },
+          
+          body: JSON.stringify({title,description,tag}),
+        
+        });
+        // const json = response.json();
+
+
+
+        //logic to add note
       const note = {
           "_id": "681576475e533397352bd1977c",
           "user": "6812e10b0171cf641f9e364b",
@@ -71,6 +69,10 @@ const NoteState=(props)=>{
 
       }
       
+
+
+
+
       //del a note 
       const delNote = (id)=>{
         //api call
@@ -81,13 +83,43 @@ const NoteState=(props)=>{
       }
       
       
-      //edit a note 
-      const editNote = ()=>{
 
+
+
+
+      //edit a note 
+      const editNote = async (id,title,description,tag)=>{
+        console.log("enter edit note section");
+        
+        //api call
+        const url = `${host}/api/notes/updatenote/${id}`
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjgxMmUxMGIwMTcxY2Y2NDFmOWUzNjRiIn0sImlhdCI6MTc0NjE1MjQ0Mn0.B9nf3sDdSTgpBOlMScfXrXVOh95lZkMSsO5DBhOnHfs"
+
+          },
+          
+          body: JSON.stringify({title,description,tag}),
+        
+        });
+        // const json = response.json();
+
+        //logic to edit in clinet
+        for (let index = 0; index < notes.length; index++) {
+          const element = notes[index];
+          if(element._id ===id){
+            element.title = title;
+            element.description = description;
+            element.tag = tag;
+          }
+          
+        }
       }
 
     return (
-        <noteContext.Provider value={{notes,addNote,delNote,editNote}} >
+        <noteContext.Provider value={{notes,getNotes,addNote,delNote,editNote}} >
             {props.children}
         </noteContext.Provider>
     )
