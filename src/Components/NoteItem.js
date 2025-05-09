@@ -4,7 +4,7 @@ const NoteItem = (props) => {
     const context = useContext(noteContext);
     const {delNote} = context;
 
-    const { note } = props;
+    const { note,updateNote } = props;
     return (
         <div className='col-md-3 my-3' >
             {/* {note.title}
@@ -16,7 +16,7 @@ const NoteItem = (props) => {
                         {/* delete icon  */}
                         <i className="far fa-trash-alt mx-2" onClick={()=>{delNote(note._id)}} aria-hidden="true"></i> 
                         {/* edit icon  */}
-                        <i className="far fa-edit mx-2" aria-hidden="true"></i>
+                        <i className="far fa-edit mx-2" aria-hidden="true" onClick={()=>{updateNote(note)}}></i>
                         
                     </div>
             </div>
