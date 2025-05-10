@@ -64,22 +64,18 @@ const NoteState = (props) => {
 
     });
     // const json = response.json();
-
+      if (!response.ok) {
+          console.error("Failed to add note");
+          return;
+        }
 
 
     //logic to add note
-    const note = {
-      "_id": "681576475e533397352bd1977c",
-      "user": "6812e10b0171cf641f9e364b",
-      "title": title,
-      "description": description,
-      "tag": tag,
-      "date": "2025-05-03T01:49:59.206Z",
-      "__v": 0
-    };
+    
     //use fetch api to call
     // setnotes= (notes.push(note)) //old method 
-    setnotes([...notes, note]); // This correctly updates the state
+     const json = await response.json(); // actual note from backend
+     setnotes([...notes, json]); 
 
   }
 
@@ -100,8 +96,14 @@ const NoteState = (props) => {
       },
 
     });
+
+     if (!response.ok) {
+      const errorText = await response.text(); // fallback if not JSON
+      console.error("Failed to delete note:", errorText);
+      return;
+    }
     const json = response.json();
-    console.log(json);
+    console.log("delete response",json);
 
 
 
