@@ -85,7 +85,7 @@ const JWT_SECRET = "NeelBiswas"
 
     ], async (req,res)=>{
  
-
+        let success = false;
         const result = validationResult(req);
         if (!result.isEmpty()) {
             return res.status(400).json({errors : result.array()});
@@ -98,8 +98,8 @@ const JWT_SECRET = "NeelBiswas"
                 return res.status(400).json({error: "Wrong Credentials entered, No user found"}) // if no user found in db or wrong email entered
             }
             const passwordCompare = await bcrypt.compare(password,user.password);
-            if(!passwordCompare){
-                return res.status(400).json({error: "Wrong Credentials entered , Wrong Password"}) // if wrong password entered
+            if(!passwordCompare){               
+                return res.status(400).json({success,error: "Wrong Credentials entered , Wrong email or Password"}) // if wrong password entered
             }
     // if everything is correct runs this 
             const data = {
@@ -109,7 +109,8 @@ const JWT_SECRET = "NeelBiswas"
                     }
                 }
             const authToken = jwt.sign(data,JWT_SECRET);
-            res.json({authToken});
+            success = true;
+            res.json({success,authToken});
 
         } catch (error) {
             console.error(error.message);
