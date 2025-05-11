@@ -14,11 +14,11 @@ const JWT_SECRET = "NeelBiswas"
 
     router.post("/createuser",[
         body('email',"enter a valid email").isEmail(),
-        body('name',"enter a valid name").isLength({min : 3}),
+        body('username',"enter a valid name").isLength({min : 3}), //username cause  in signup.js body name defined as username
         body('password',"enter a valid password").isLength({min : 5}),
 
     ], async (req,res)=>{
-
+        let success = false;
  //if error return bad req and error   
     console.log(req.body);
     // const user = User(req.body)
@@ -32,7 +32,7 @@ const JWT_SECRET = "NeelBiswas"
         let user = await User.findOne({email : req.body.email});
         
         if(user){
-            return res.status(400).json({error : "Email already exists"})
+            return res.status(400).json({success,error : "Email already exists"})
         }
 
 //password hashing
@@ -43,7 +43,7 @@ const JWT_SECRET = "NeelBiswas"
 
 //create new user
         user = await User.create({
-            name: req.body.name,
+            name: req.body.username,
             password: setPass,
             email: req.body.email,
         })
@@ -60,7 +60,8 @@ const JWT_SECRET = "NeelBiswas"
         }
         const authToken = jwt.sign(data,JWT_SECRET);
         // console.log("token value ",authToken); //return tokens
-        res.json({authToken})
+        success = true;
+        res.json({success,authToken})
         
         // res.json({user}) 
 

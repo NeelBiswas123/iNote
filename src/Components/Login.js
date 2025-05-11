@@ -50,10 +50,10 @@ const Login = () => {
           </div>
           <div className="form-group mb-3">
             <label htmlFor="exampleInputPassword1">Password</label>
-            <input type="password" className="form-control" placeholder="Password" id="password" name='password'  onChange={onChange}value={credentials.password}/>
+            <input type="password" className="form-control" placeholder=" Password" id="password" name='password'  onChange={onChange}value={credentials.password}/>
           </div>
 
-          <button type="submit" className="btn btn-primary" >Submit</button>
+          <button type="submit" className="btn btn-primary" >Login</button>
         </form>
       </div>
     </>
