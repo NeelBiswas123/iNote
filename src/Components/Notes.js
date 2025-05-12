@@ -3,7 +3,7 @@ import noteContext from '../Context/notes/NoteContext';
 import NoteItem from './NoteItem';
 import AddNote from "./AddNote";
 
-const Notes = () => {
+const Notes = (props) => {
   const context = useContext(noteContext);
   const { notes, getNotes,editNote } = context;
   // to fetch all the notes 
@@ -12,7 +12,7 @@ const Notes = () => {
   }, []);
 
 
-  //to edit  an existing note
+//to edit  an existing note
       const ref = useRef(null);
       const refClose = useRef(null);
 
@@ -24,7 +24,6 @@ const Notes = () => {
           setNote({id:currentNote._id,etitle:currentNote.title,edescription:currentNote.description,etag: currentNote.tag});
         } else {
           console.log("Not workingfor ref");
-
         }
       }
 
@@ -35,10 +34,11 @@ const Notes = () => {
       editNote(note.id,note.etitle,note.edescription,note.etag);
       if (refClose.current) {
         refClose.current.click();
+        props.showAlert("Updated Successfully","success")
         
       } else {
         console.log("Not working for refClose");
-
+        props.showAlert("Cannot update notes","danger")
       }
        
         
@@ -51,7 +51,7 @@ const Notes = () => {
 
   return (
     <>
-      <AddNote />
+      <AddNote  showAlert={props.showAlert}/>
 
       {/* add functionality to edit button   */}
       <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -101,7 +101,7 @@ const Notes = () => {
         {notes.length === 0 && "No notes to display"}
         {notes.map((note) => {
           //   return note.title;
-          return <NoteItem key={note._id} updateNote={updateNote} note={note} />
+          return <NoteItem showAlert={props.showAlert} key={note._id} updateNote={updateNote} note={note} />
         })}
       </div>
     </>
