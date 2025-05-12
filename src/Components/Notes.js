@@ -2,13 +2,20 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import noteContext from '../Context/notes/NoteContext';
 import NoteItem from './NoteItem';
 import AddNote from "./AddNote";
+import { useNavigate } from 'react-router-dom';
 
 const Notes = (props) => {
   const context = useContext(noteContext);
   const { notes, getNotes,editNote } = context;
+  const navigate = useNavigate();
   // to fetch all the notes 
   useEffect(() => {
+      // checks if user logged then acesss home else redirect to  login
+    if(localStorage.getItem("token")===null){
+         navigate("/login");
+    }else{
     getNotes();
+    }
   }, []);
 
 
@@ -33,6 +40,7 @@ const Notes = (props) => {
       console.log("Updating the note",note);
       editNote(note.id,note.etitle,note.edescription,note.etag);
       if (refClose.current) {
+
         refClose.current.click();
         props.showAlert("Updated Successfully","success")
         

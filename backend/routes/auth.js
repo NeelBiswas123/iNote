@@ -132,7 +132,7 @@ const JWT_SECRET = "NeelBiswas"
             res.send(user)
         }catch (error) {
             console.error(error.message);
-            res.status(500).send("Internal Error occuredererrer")
+            res.status(500).send("Internal Error occured")
         }
         
         

@@ -41,7 +41,7 @@ export default function App() {
               {/* <Route path="/about">
             <About />
             </Route>  old method doesnot work*/ }
-
+            
               <Route exact path="/" element={<Home  showAlert={showAlert}/>} />
               <Route exact path="/about" element={<About />} />
 

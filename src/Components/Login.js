@@ -42,12 +42,13 @@ const Login = (props) => {
 
   return (
     <>
-      <div>
+      <div className='my-2'>
         <form onSubmit={onSubmit}>
           <div className="form-group">
+            <h1>Login</h1>
             <label htmlFor="email">Email address</label>
             <input type="email" className="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email" onChange={onChange} value={credentials.email}/>
-            <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+           
           </div>
           <div className="form-group mb-3">
             <label htmlFor="exampleInputPassword1">Password</label>

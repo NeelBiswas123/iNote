@@ -45,8 +45,9 @@ const Signup = (props) => {
     <>
       <div>
         <>
-          <div className='container'>
+          <div className='container my-2'>
             <form onSubmit={onSubmit}>
+              <h1>Sign Up</h1>
               <div className="form-group">
                 <label htmlFor="text">Enter Name : </label>
                 <input type="text" className="form-control" id="username" name="username" aria-describedby="emailHelp" placeholder="Enter your name" onChange={onChange} value={credentials.username} />
